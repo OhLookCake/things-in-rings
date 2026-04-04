@@ -5,6 +5,158 @@
     box-sizing: border-box;
 }
 
+/* ===== Index (index.html) ===== */
+body.index-page {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #1a1a2e;
+    color: #eee;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+body.index-page h1 {
+    font-size: 2.4rem;
+    margin-bottom: 4px;
+}
+
+.tagline {
+    font-size: 1.1rem;
+    color: #aaa;
+    margin-bottom: 36px;
+}
+
+.how-to-play {
+    max-width: 640px;
+    width: 100%;
+    background: #16213e;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+}
+
+.how-to-play h2 {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    color: #ccc;
+}
+
+.how-to-play ol {
+    padding-left: 20px;
+    line-height: 1.7;
+}
+
+.how-to-play ol > li {
+    margin-bottom: 12px;
+}
+
+.how-to-play ul {
+    padding-left: 18px;
+    margin-top: 6px;
+}
+
+.how-to-play a {
+    color: #4dabf7;
+    text-decoration: none;
+}
+
+.how-to-play a:hover {
+    text-decoration: underline;
+}
+
+.ring-label {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: #1a1a2e;
+}
+
+.ring-label.attribute { background: #ff6b6b; }
+.ring-label.context   { background: #4dabf7; }
+.ring-label.word      { background: #69db7c; }
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.nav-card {
+    display: block;
+    width: 260px;
+    background: #16213e;
+    border: 2px solid #2a3a5e;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    text-decoration: none;
+    color: #eee;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.nav-card:hover {
+    border-color: #4dabf7;
+    transform: translateY(-2px);
+}
+
+.nav-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+.nav-card p {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.tips {
+    max-width: 640px;
+    width: 100%;
+    background: #16213e;
+    border-radius: 12px;
+    padding: 28px 32px;
+}
+
+.tips h2 {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    color: #ccc;
+}
+
+.tips ul {
+    padding-left: 20px;
+    line-height: 1.7;
+}
+
+.tips li {
+    margin-bottom: 8px;
+}
+
+.tips kbd {
+    background: #2a3a5e;
+    border: 1px solid #3a4a6e;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-family: inherit;
+    font-size: 0.9em;
+}
+
+.tips em {
+    color: #4dabf7;
+}
+
 /* ===== Board (board.html) ===== */
 body.board-page {
     font-family: 'Arial', sans-serif;

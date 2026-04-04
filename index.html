@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Things in Rings</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="index-page">
+  <h1>Things in Rings</h1>
+  <p class="tagline">A Venn diagram party game</p>
+
+  <div class="how-to-play">
+    <h2>How to Play</h2>
+    <ol>
+      <li><strong>Generate clues.</strong> Open the <a href="clues.html">Clue Generator</a> and pick a difficulty. You'll get three clues &mdash; one for each ring:
+        <ul>
+          <li><span class="ring-label attribute">Attribute</span> &mdash; a physical property (e.g. "Can be eaten")</li>
+          <li><span class="ring-label context">Context</span> &mdash; where or how it's found (e.g. "Found in a kitchen")</li>
+          <li><span class="ring-label word">Word</span> &mdash; a spelling/phonetic rule (e.g. "Has exactly 5 letters")</li>
+        </ul>
+      </li>
+      <li><strong>Draw words.</strong> On the <a href="board.html">Board</a>, each player has a hand of word cards. Click <em>Draw</em> to refill.</li>
+      <li><strong>Place words.</strong> Drag each word card into the region of the Venn diagram where it belongs:
+        <ul>
+          <li>Inside a single ring if it matches only that clue.</li>
+          <li>In the overlap if it matches two or three clues.</li>
+          <li>In the <em>None</em> zone if it matches nothing.</li>
+        </ul>
+      </li>
+      <li><strong>Debate and score.</strong> Players take turns challenging each other's placements. Agree on the rules, argue about the edge cases, and have fun.</li>
+    </ol>
+  </div>
+
+  <div class="nav-links">
+    <a href="board.html" class="nav-card">
+      <h3>Board</h3>
+      <p>Drag word cards onto the Venn diagram</p>
+    </a>
+    <a href="clues.html" class="nav-card">
+      <h3>Clue Generator</h3>
+      <p>Generate attribute, context, and word clues</p>
+    </a>
+  </div>
+
+  <div class="tips">
+    <h2>Tips</h2>
+    <ul>
+      <li>Hold <kbd>Shift</kbd> and drag to reposition the circles and labels on the board.</li>
+      <li>Start on <em>Easy</em> for your first game, then move to <em>Hard</em> for heated debates.</li>
+      <li>The best rounds happen when a word could plausibly go in multiple spots.</li>
+    </ul>
+  </div>
+</body>
+</html>
