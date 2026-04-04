@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venn Diagram Creative Interface</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="board-page">
+    <div class="container">
+        <div class="board-area" id="boardArea">
+            <div class="venn-circle circle1" id="circle1"></div>
+            <div class="venn-circle circle2" id="circle2"></div>
+            <div class="venn-circle circle3" id="circle3"></div>
+            <div class="region-label label-1">attribute</div>
+            <div class="region-label label-2">context</div>
+            <div class="region-label label-3">word</div>
+            <div class="region-label label-none">None</div>
+        </div>
+        
+        <div class="bottom-area">
+            <div class="hand-area" id="handArea"></div>
+            <button class="draw-button" id="drawButton">Draw</button>
+        </div>
+    </div>
+
+    <script>
+        const wordList = ['puppy', 'basketball', 'car', 'tree', 'house',
+         'novel', 'sun', 'moon', 'star', 'universe', 'saturn','fish', 'bird',
+         'flower', 'apple', 'chair', 'table', 'bed', 'door', 'window',
+         'shoe', 'hat', 'shirt', 'cup', 'spoon',
+         'pencil', 'shoebox', 'office', 'key', 'clock', 'phone', 'toy',
+         'bike', 'bus', 'train', 'plane', 'boat', 'mushroom', 'air'
+         'pizza', 'ice', 'cookie', 'pie', 'orange',
+         'bear', 'lion', 'frog', 'duck', 'cow', 'ant', 'horse', 'bacterium',
+         'cloud', 'raindrop', 'snowflake', 'firework', 'waterfall', 'rock', 'leaf',
+         'grass', 'beach', 'park', 'school', 'store', 'boardgame', 'glove',
+         'pool', 'bat', 'aardvark', 'xylophone', 'violin', 'doorbell',
+         'monster', 'robot', 'castle', 'crown', 'forest', 'oven',
+         'attic', 'egg', 'nun', 'flag', 'airplane', 'mountain', 'eye',
+         'umbrella', 'underwear', 'toaster', 'diamond', 'seashell', 'button',
+         'lighthouse', 'comb', 'earring', 'camera', 'brain', 'heart',
+         'owl', 'pea', 'campfire', 'yoyo', 'milkshake', 'airstrip',
+         'telephone', 'towel', 'mirror', 'museum', 'dress', 'oboe', 'coin',
+         'skyscraper', 'kitten', 'broom', 'igloo', 'coral', 'skimask',
+         'potato', 'cigar', 'laptop', 'statue', 'bean', 'bomb', 'llama',
+         'queen', 'rocket', 'asteroid', 'spatula', 'pan', 'rake', 'scissors',
+         'lawnmower', 'hose', 'painting', 'mask', 'fossil', 'skull', 'scuba',
+         'needle', 'anthill', 'whip', 'fork', 'pistol', 'rifle', 'tissue',
+         'notebook', 'toilet', 'flour', 'chocolate', 'park', 'teabag', 
+         'candle', 'spectacles', 'trousers', 'microscope', 
+         'helicopter', 'paint', 'cinema', 'boat', 'river', 'kangaroo',
+         'cemetery', 'refrigerator', 'hippopotamus', 'bookshelf', 'abacus',
+         'zeppelin', 'balloon', 'airbag', 'ear', 'nose', 
+         'stamp', 'truck', 'elevator', 'bathroom', 'fork', 'forklift',
+         'watch', 'clock', 'clocktower', 'sea', 'tea', 'coffee', 'bee',
+         'fire', 'ape', 'orangutan', 'apron', 'stool', 'strap', 'satellite',
+         'spaceship', 'hospital', 'hotel', 'wheel', 'door', 'doorbell', 
+         'shirt', 'typewriter', 'printer', 'calculator', 'lamp', 'tractor',
+         'seesaw', 'bandage', 'factory', 'glitter', 'tree', 'flask',
+         'spring', 'fossil', 'bone', 'battleship', 'kite', 'eagle', 
+         'pterodactyl', 'cliff', 'internet', 'soldier', 'painting',
+         'pencil', 'easel', 'elastic', 'eraser', 'pool', 'school',
+         'umbrella', 'shadow', 'island', 'kiwi', 'mosque', 'mosquito',
+         'pixie', 'elf', 'smartphone', 'candle', 'pepperspray', 'jacket',
+         'hair', 'sheep', 'flea', 
+
+   
+
+        ];
+        
+        const nsfwWordList = [
+         'fart', 'poop', 'semen', 'queef', 'missionary', 'shart',
+         'shit', 'arsehole', 'motherfucker', 'pee', 'butt', 'penis',
+         'vagina', 'bitch', 'blowjob', 'handjob', 'rimjob', 'boobs',
+         'cocaine', 'lesbian', 'shrooms', 'weed', 'jailbait', 'sex',
+         'bollocks', 'orgy', 'orgasm', 'porno', 'whore', 'viagra',
+         'masturbator', 'dildo', 'fleshlight', 'douchebag', 'pimps',
+         'chlamydia', 'herpes', 'gonorrhea', 'foetus', 'anus',
+         'gigolo', 'doobie', 'condom', 'incel', 'panty', 'sodomiser',
+         'bastard', 'cocksucker', 'fellatio', 'pubes', 'tit', 'piss',
+         'kama sutra', 'missionary'
+        ];
+        let usedWords = [];
+        let draggedElement = null;
+        let isDragging = false;
+        let offset = { x: 0, y: 0 };
+        let shiftPressed = false;
+        let circleBeingDragged = null;
+
+        // Initialize hand with 5 cards
+        function initializeHand() {
+            const handArea = document.getElementById('handArea');
+            handArea.innerHTML = '';
+            
+            for (let i = 0; i < 5; i++) {
+                createWordCard();
+            }
+        }
+
+        function getRandomWord() {
+            const availableWords = wordList.filter(word => !usedWords.includes(word));
+            if (availableWords.length === 0) {
+                usedWords = [];
+                return wordList[Math.floor(Math.random() * wordList.length)];
+            }
+            const word = availableWords[Math.floor(Math.random() * availableWords.length)];
+            usedWords.push(word);
+            return word;
+        }
+
+        function createWordCard() {
+            const handArea = document.getElementById('handArea');
+            const card = document.createElement('div');
+            card.className = 'word-card';
+            card.textContent = getRandomWord();
+            card.draggable = false;
+            
+            // Add event listeners for dragging
+            card.addEventListener('mousedown', startDrag);
+            
+            handArea.appendChild(card);
+            return card;
+        }
+
+        function startDrag(e) {
+            e.preventDefault();
+            draggedElement = e.target;
+            isDragging = true;
+            
+            const rect = draggedElement.getBoundingClientRect();
+            offset.x = e.clientX - rect.left;
+            offset.y = e.clientY - rect.top;
+            
+            draggedElement.classList.add('dragging');
+            
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
+        }
+
+        function drag(e) {
+            if (!isDragging || !draggedElement) return;
+            
+            e.preventDefault();
+            
+            const x = e.clientX - offset.x;
+            const y = e.clientY - offset.y;
+            
+            draggedElement.style.position = 'fixed';
+            draggedElement.style.left = x + 'px';
+            draggedElement.style.top = y + 'px';
+            draggedElement.style.zIndex = '9999';
+        }
+
+        function stopDrag(e) {
+            if (!isDragging || !draggedElement) return;
+            
+            isDragging = false;
+            draggedElement.classList.remove('dragging');
+            
+            const boardArea = document.getElementById('boardArea');
+            const boardRect = boardArea.getBoundingClientRect();
+            const cardRect = draggedElement.getBoundingClientRect();
+            
+            // Check if card is dropped on board area
+            if (cardRect.top < boardRect.bottom - 50) {
+                // Move to board area
+                draggedElement.style.position = 'absolute';
+                draggedElement.style.left = (e.clientX - boardRect.left - offset.x) + 'px';
+                draggedElement.style.top = (e.clientY - boardRect.top - offset.y) + 'px';
+                draggedElement.classList.add('floating-card');
+                boardArea.appendChild(draggedElement);
+                
+                reorganizeHand();
+            } else {
+                // Return to hand or keep in current position
+                if (!draggedElement.classList.contains('floating-card')) {
+                    draggedElement.style.position = '';
+                    draggedElement.style.left = '';
+                    draggedElement.style.top = '';
+                    draggedElement.style.zIndex = '';
+                }
+            }
+            
+            draggedElement = null;
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', stopDrag);
+        }
+
+        function reorganizeHand() {
+            const handArea = document.getElementById('handArea');
+            const cardsInHand = Array.from(handArea.querySelectorAll('.word-card'));
+            
+            cardsInHand.forEach(card => {
+                card.style.position = '';
+                card.style.left = '';
+                card.style.top = '';
+                card.style.zIndex = '';
+            });
+        }
+
+        // Circle and label dragging functionality
+        function startCircleDrag(e) {
+            if (!shiftPressed) return;
+            
+            e.preventDefault();
+            circleBeingDragged = e.target;
+            
+            const rect = circleBeingDragged.getBoundingClientRect();
+            const boardRect = document.getElementById('boardArea').getBoundingClientRect();
+            
+            offset.x = e.clientX - rect.left;
+            offset.y = e.clientY - rect.top;
+            
+            document.addEventListener('mousemove', dragCircle);
+            document.addEventListener('mouseup', stopCircleDrag);
+        }
+
+        function startLabelDrag(e) {
+            if (!shiftPressed) return;
+            
+            e.preventDefault();
+            circleBeingDragged = e.target;
+            
+            const rect = circleBeingDragged.getBoundingClientRect();
+            const boardRect = document.getElementById('boardArea').getBoundingClientRect();
+            
+            offset.x = e.clientX - rect.left;
+            offset.y = e.clientY - rect.top;
+            
+            document.addEventListener('mousemove', dragLabel);
+            document.addEventListener('mouseup', stopCircleDrag);
+        }
+
+        function dragCircle(e) {
+            if (!circleBeingDragged || !shiftPressed) return;
+            
+            e.preventDefault();
+            
+            const boardRect = document.getElementById('boardArea').getBoundingClientRect();
+            const x = e.clientX - boardRect.left - offset.x;
+            const y = e.clientY - boardRect.top - offset.y;
+            
+            circleBeingDragged.style.left = Math.max(0, Math.min(x, boardRect.width - circleBeingDragged.offsetWidth)) + 'px';
+            circleBeingDragged.style.top = Math.max(0, Math.min(y, boardRect.height - circleBeingDragged.offsetHeight)) + 'px';
+        }
+
+        function dragLabel(e) {
+            if (!circleBeingDragged || !shiftPressed) return;
+            
+            e.preventDefault();
+            
+            const boardRect = document.getElementById('boardArea').getBoundingClientRect();
+            const x = e.clientX - boardRect.left - offset.x;
+            const y = e.clientY - boardRect.top - offset.y;
+            
+            circleBeingDragged.style.left = Math.max(0, Math.min(x, boardRect.width - circleBeingDragged.offsetWidth)) + 'px';
+            circleBeingDragged.style.top = Math.max(0, Math.min(y, boardRect.height - circleBeingDragged.offsetHeight)) + 'px';
+        }
+
+        function stopCircleDrag() {
+            circleBeingDragged = null;
+            document.removeEventListener('mousemove', dragCircle);
+            document.removeEventListener('mouseup', stopCircleDrag);
+        }
+
+        // Draw button functionality
+        function drawNewCards() {
+            const handArea = document.getElementById('handArea');
+            const currentCards = handArea.querySelectorAll('.word-card').length;
+            const cardsNeeded = 5 - currentCards;
+            
+            for (let i = 0; i < cardsNeeded; i++) {
+                createWordCard();
+            }
+
+            if (cardsNeeded <= 0) {
+                createWordCard();
+            }
+            
+            reorganizeHand();
+        }
+
+        // Event listeners
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Shift') {
+                shiftPressed = true;
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'Shift') {
+                shiftPressed = false;
+            }
+        });
+
+        // Add circle and label drag listeners
+        document.getElementById('circle1').addEventListener('mousedown', startCircleDrag);
+        document.getElementById('circle2').addEventListener('mousedown', startCircleDrag);
+        document.getElementById('circle3').addEventListener('mousedown', startCircleDrag);
+        
+        // Add label drag listeners
+        document.querySelectorAll('.region-label').forEach(label => {
+            label.addEventListener('mousedown', startLabelDrag);
+        });
+
+        // Draw button listener
+        document.getElementById('drawButton').addEventListener('click', drawNewCards);
+
+        // Initialize the interface
+        initializeHand();
+    </script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+/* ===== Shared Reset ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== Board (board.html) ===== */
+body.board-page {
+    font-family: 'Arial', sans-serif;
+    background: #f8f9fa;
+    color: #333;
+    overflow: hidden;
+    user-select: none;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.board-area {
+    height: 85vh;
+    position: relative;
+    background: #ffffff;
+    border-bottom: 1px solid #ddd;
+}
+
+.venn-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+    width: 40vw;
+    height: 40vw;
+}
+
+.venn-circle:hover {
+    opacity: 0.4;
+}
+
+.circle1 {
+    background: #ff6b6b;
+    border: 2px solid #ff5252;
+    top: 2vh;
+    left: calc(40% - 40vw + 10vw);
+}
+
+.circle2 {
+    background: #4dabf7;
+    border: 2px solid #339af0;
+    top: 2vh;
+    left: calc(40% - 10vw);
+}
+
+.circle3 {
+    background: #69db7c;
+    border: 2px solid #51cf66;
+    top: calc(85vh - 40vw - 1vh);
+    left: calc(40% - 20vw);
+}
+
+.region-label {
+    position: absolute;
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+    z-index: 100;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 2px solid;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.label-1 {
+    background: #ff6b6b;
+    border-color: #ff5252;
+    top: calc(2vh + 5vh);
+    left: calc((40% - 40vw + 10vw) - 6vw);
+}
+
+.label-2 {
+    background: #4dabf7;
+    border-color: #339af0;
+    top: calc(2vh + 5vh);
+    left: calc((40% - 10vw) + 40vw + 6vw - 8vw);
+}
+
+.label-3 {
+    background: #69db7c;
+    border-color: #51cf66;
+    top: 52vw;
+    left: calc((40% - 20vw) + 3vw);
+}
+
+.label-none {
+    position: absolute;
+    top: calc(50%);
+    left: 80vw;
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+    z-index: 100;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: #adb5bd;
+    border: 2px solid #868e96;
+}
+
+.bottom-area {
+    height: 15vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #f1f3f4;
+}
+
+.hand-area {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    min-height: 60px;
+}
+
+.word-card {
+    width: 120px;
+    height: 60px;
+    background: #ffffff;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1000;
+}
+
+.word-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border-color: #adb5bd;
+}
+
+.word-card:active {
+    cursor: grabbing;
+}
+
+.word-card.dragging {
+    position: fixed;
+    z-index: 9999;
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.draw-button {
+    width: 100px;
+    height: 60px;
+    background: #495057;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-left: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.draw-button:hover {
+    background: #343a40;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.draw-button:active {
+    transform: translateY(1px);
+}
+
+.floating-card {
+    position: absolute;
+    z-index: 1001;
+}
+
+.empty-slot {
+    width: 120px;
+    height: 60px;
+    border: 2px dashed #adb5bd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    font-size: 12px;
+}
+
+/* ===== Clues (clues.html) ===== */
+body.clues-page {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #1a1a2e;
+    color: #eee;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+body.clues-page h1 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.controls {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+body.clues-page select {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background: #16213e;
+    color: #eee;
+    cursor: pointer;
+}
+
+body.clues-page button {
+    padding: 10px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    background: #e94560;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+body.clues-page button:hover {
+    background: #c73650;
+}
+
+.clues {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 900px;
+    width: 100%;
+}
+
+.clue-card {
+    flex: 1 1 250px;
+    max-width: 300px;
+    background: #16213e;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+}
+
+.clue-card h2 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+}
+
+.clue-card.word h2 {
+    color: #1a1a2e;
+    background: #69db7c;
+    border-radius: 6px;
+    padding: 6px;
+}
+
+.clue-card.attribute h2 {
+    color: #1a1a2e;
+    background: #ff6b6b;
+    border-radius: 6px;
+    padding: 6px;
+}
+
+.clue-card.context h2 {
+    color: #1a1a2e;
+    background: #4dabf7;
+    border-radius: 6px;
+    padding: 6px;
+}
+
+.clue-text {
+    font-size: 1.15rem;
+    line-height: 1.5;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
