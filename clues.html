@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clue Generator</title>
+  <title>Things in Rings — Clues</title>
+  <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light';</script>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body class="clues-page">
+  <button class="theme-toggle" id="themeToggle">Dark</button>
   <h1>Clue Generator</h1>
   <div class="controls">
     <select id="difficulty">
@@ -356,5 +358,6 @@
       document.getElementById("context-clue").textContent = pick(clues.context[diff]);
     }
   </script>
+  <script src="./theme.js"></script>
 </body>
 </html>

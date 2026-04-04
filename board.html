@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venn Diagram Creative Interface</title>
+    <title>Things in Rings — Board</title>
+    <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light';</script>
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body class="board-page">
+    <button class="theme-toggle" id="themeToggle">Dark</button>
     <div class="container">
         <div class="board-area" id="boardArea">
             <div class="venn-circle circle1" id="circle1"></div>
@@ -319,5 +321,6 @@
         // Initialize the interface
         initializeHand();
     </script>
+    <script src="./theme.js"></script>
 </body>
 </html>

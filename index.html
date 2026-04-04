@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Things in Rings</title>
+  <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light';</script>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body class="index-page">
+  <button class="theme-toggle" id="themeToggle">Dark</button>
   <h1>Things in Rings</h1>
   <p class="tagline">A Venn diagram party game</p>
 
@@ -51,5 +53,6 @@
       <li>The best rounds happen when a word could plausibly go in multiple spots.</li>
     </ul>
   </div>
+  <script src="./theme.js"></script>
 </body>
 </html>

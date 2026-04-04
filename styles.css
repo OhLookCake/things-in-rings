@@ -1,15 +1,80 @@
-/* ===== Shared Reset ===== */
+/* ===== Theme Variables ===== */
+:root {
+    --bg: #f8f9fa;
+    --bg-surface: #ffffff;
+    --bg-raised: #f1f3f5;
+    --text: #333;
+    --text-muted: #6c757d;
+    --border: #dee2e6;
+    --border-hover: #adb5bd;
+    --accent: #339af0;
+    --btn-bg: #495057;
+    --btn-bg-hover: #343a40;
+    --shadow-sm: rgba(0, 0, 0, 0.1);
+    --shadow-md: rgba(0, 0, 0, 0.15);
+    --shadow-lg: rgba(0, 0, 0, 0.2);
+    --kbd-bg: #e9ecef;
+    --kbd-border: #dee2e6;
+    --none-bg: #adb5bd;
+    --none-border: #868e96;
+}
+
+[data-theme="dark"] {
+    --bg: #1a1a2e;
+    --bg-surface: #16213e;
+    --bg-raised: #1e2a4a;
+    --text: #eee;
+    --text-muted: #aaa;
+    --border: #2a3a5e;
+    --border-hover: #3a4a6e;
+    --accent: #4dabf7;
+    --btn-bg: #2a3a5e;
+    --btn-bg-hover: #3a4a6e;
+    --shadow-sm: rgba(0, 0, 0, 0.3);
+    --shadow-md: rgba(0, 0, 0, 0.4);
+    --shadow-lg: rgba(0, 0, 0, 0.5);
+    --kbd-bg: #2a3a5e;
+    --kbd-border: #3a4a6e;
+    --none-bg: #4a5568;
+    --none-border: #636e7e;
+}
+
+/* ===== Shared Reset & Base ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* ===== Theme Toggle ===== */
+.theme-toggle {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 10000;
+    background: var(--bg-surface);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.theme-toggle:hover {
+    color: var(--text);
+    border-color: var(--border-hover);
+}
+
 /* ===== Index (index.html) ===== */
 body.index-page {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #1a1a2e;
-    color: #eee;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -24,14 +89,15 @@ body.index-page h1 {
 
 .tagline {
     font-size: 1.1rem;
-    color: #aaa;
+    color: var(--text-muted);
     margin-bottom: 36px;
 }
 
 .how-to-play {
     max-width: 640px;
     width: 100%;
-    background: #16213e;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 28px 32px;
     margin-bottom: 32px;
@@ -42,7 +108,7 @@ body.index-page h1 {
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 16px;
-    color: #ccc;
+    color: var(--text-muted);
 }
 
 .how-to-play ol {
@@ -60,7 +126,7 @@ body.index-page h1 {
 }
 
 .how-to-play a {
-    color: #4dabf7;
+    color: var(--accent);
     text-decoration: none;
 }
 
@@ -76,7 +142,7 @@ body.index-page h1 {
     letter-spacing: 1px;
     padding: 2px 8px;
     border-radius: 4px;
-    color: #1a1a2e;
+    color: #333;
 }
 
 .ring-label.attribute { background: #ff6b6b; }
@@ -94,18 +160,18 @@ body.index-page h1 {
 .nav-card {
     display: block;
     width: 260px;
-    background: #16213e;
-    border: 2px solid #2a3a5e;
+    background: var(--bg-surface);
+    border: 2px solid var(--border);
     border-radius: 12px;
     padding: 24px;
     text-align: center;
     text-decoration: none;
-    color: #eee;
+    color: var(--text);
     transition: border-color 0.2s, transform 0.2s;
 }
 
 .nav-card:hover {
-    border-color: #4dabf7;
+    border-color: var(--accent);
     transform: translateY(-2px);
 }
 
@@ -116,13 +182,14 @@ body.index-page h1 {
 
 .nav-card p {
     font-size: 0.9rem;
-    color: #aaa;
+    color: var(--text-muted);
 }
 
 .tips {
     max-width: 640px;
     width: 100%;
-    background: #16213e;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 28px 32px;
 }
@@ -132,7 +199,7 @@ body.index-page h1 {
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 16px;
-    color: #ccc;
+    color: var(--text-muted);
 }
 
 .tips ul {
@@ -145,8 +212,8 @@ body.index-page h1 {
 }
 
 .tips kbd {
-    background: #2a3a5e;
-    border: 1px solid #3a4a6e;
+    background: var(--kbd-bg);
+    border: 1px solid var(--kbd-border);
     border-radius: 4px;
     padding: 1px 6px;
     font-family: inherit;
@@ -154,14 +221,11 @@ body.index-page h1 {
 }
 
 .tips em {
-    color: #4dabf7;
+    color: var(--accent);
 }
 
 /* ===== Board (board.html) ===== */
 body.board-page {
-    font-family: 'Arial', sans-serif;
-    background: #f8f9fa;
-    color: #333;
     overflow: hidden;
     user-select: none;
 }
@@ -175,8 +239,8 @@ body.board-page {
 .board-area {
     height: 85vh;
     position: relative;
-    background: #ffffff;
-    border-bottom: 1px solid #ddd;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
 }
 
 .venn-circle {
@@ -247,17 +311,11 @@ body.board-page {
 }
 
 .label-none {
-    position: absolute;
-    top: calc(50%);
+    background: var(--none-bg);
+    border-color: var(--none-border);
+    color: var(--text);
+    top: 50%;
     left: 80vw;
-    font-weight: bold;
-    font-size: 18px;
-    color: #333;
-    z-index: 100;
-    padding: 8px 12px;
-    border-radius: 6px;
-    background: #adb5bd;
-    border: 2px solid #868e96;
 }
 
 .bottom-area {
@@ -266,7 +324,7 @@ body.board-page {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background: #f1f3f4;
+    background: var(--bg-raised);
 }
 
 .hand-area {
@@ -279,8 +337,8 @@ body.board-page {
 .word-card {
     width: 120px;
     height: 60px;
-    background: #ffffff;
-    border: 2px solid #dee2e6;
+    background: var(--bg-surface);
+    border: 2px solid var(--border);
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -290,14 +348,14 @@ body.board-page {
     font-weight: 500;
     text-align: center;
     text-transform: uppercase;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--shadow-sm);
     position: relative;
     z-index: 1000;
 }
 
 .word-card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    border-color: #adb5bd;
+    box-shadow: 0 4px 8px var(--shadow-md);
+    border-color: var(--border-hover);
 }
 
 .word-card:active {
@@ -308,26 +366,27 @@ body.board-page {
     position: fixed;
     z-index: 9999;
     transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px var(--shadow-lg);
 }
 
 .draw-button {
     width: 100px;
     height: 60px;
-    background: #495057;
+    background: var(--btn-bg);
     border: none;
     border-radius: 8px;
     color: white;
     font-size: 16px;
     font-weight: 500;
+    font-family: inherit;
     cursor: pointer;
     margin-left: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--shadow-sm);
 }
 
 .draw-button:hover {
-    background: #343a40;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background: var(--btn-bg-hover);
+    box-shadow: 0 4px 8px var(--shadow-md);
 }
 
 .draw-button:active {
@@ -342,20 +401,17 @@ body.board-page {
 .empty-slot {
     width: 120px;
     height: 60px;
-    border: 2px dashed #adb5bd;
+    border: 2px dashed var(--border-hover);
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #6c757d;
+    color: var(--text-muted);
     font-size: 12px;
 }
 
 /* ===== Clues (clues.html) ===== */
 body.clues-page {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #1a1a2e;
-    color: #eee;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -375,17 +431,18 @@ body.clues-page h1 {
     margin-bottom: 40px;
 }
 
-body.clues-page select {
+.controls select {
     padding: 10px 20px;
     font-size: 1rem;
-    border: none;
+    border: 1px solid var(--border);
     border-radius: 8px;
-    background: #16213e;
-    color: #eee;
+    background: var(--bg-surface);
+    color: var(--text);
+    font-family: inherit;
     cursor: pointer;
 }
 
-body.clues-page button {
+.controls button {
     padding: 10px 28px;
     font-size: 1rem;
     font-weight: 600;
@@ -393,11 +450,12 @@ body.clues-page button {
     border-radius: 8px;
     background: #e94560;
     color: #fff;
+    font-family: inherit;
     cursor: pointer;
     transition: background 0.2s;
 }
 
-body.clues-page button:hover {
+.controls button:hover {
     background: #c73650;
 }
 
@@ -413,7 +471,8 @@ body.clues-page button:hover {
 .clue-card {
     flex: 1 1 250px;
     max-width: 300px;
-    background: #16213e;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 24px;
     text-align: center;
@@ -427,21 +486,21 @@ body.clues-page button:hover {
 }
 
 .clue-card.word h2 {
-    color: #1a1a2e;
+    color: #333;
     background: #69db7c;
     border-radius: 6px;
     padding: 6px;
 }
 
 .clue-card.attribute h2 {
-    color: #1a1a2e;
+    color: #333;
     background: #ff6b6b;
     border-radius: 6px;
     padding: 6px;
 }
 
 .clue-card.context h2 {
-    color: #1a1a2e;
+    color: #333;
     background: #4dabf7;
     border-radius: 6px;
     padding: 6px;
