@@ -426,6 +426,98 @@ body.board-page {
     font-size: 12px;
 }
 
+/* ===== Board Tablet ===== */
+@media (max-width: 1024px) and (min-width: 601px) {
+    .circle3 {
+        top: calc(2vh + 20vw);
+        left: calc(40% - 20vw);
+        max-height: calc(85vh - 2vh - 20vw - 2vh);
+    }
+
+    .label-3 {
+        top: min(calc(2vh + 20vw + 41vw), calc(85vh - 5vh));
+    }
+}
+
+/* ===== Board Mobile ===== */
+@media (max-width: 600px) {
+    .board-area {
+        height: 70vh;
+    }
+
+    .venn-circle {
+        width: 48vw;
+        height: 48vw;
+    }
+
+    .circle1 {
+        left: calc(50% - 40vw);
+    }
+
+    .circle2 {
+        left: calc(50% - 8vw);
+    }
+
+    .circle3 {
+        top: calc(2vh + 28vw);
+        left: calc(50% - 24vw);
+    }
+
+    .region-label {
+        font-size: 11px;
+        padding: 4px 6px;
+    }
+
+    .label-1 {
+        top: 2vw;
+        left: 2vw;
+    }
+
+    .label-2 {
+        top: 46px;
+        left: auto;
+        right: 2vw;
+    }
+
+    .label-3 {
+        top: min(calc(2vh + 28vw + 49vw), calc(70vh - 5vh));
+        left: calc(50% - 24vw + 2vw);
+    }
+
+    .label-none {
+        left: auto;
+        right: 3vw;
+        top: calc(70vh - 8vh);
+    }
+
+    .bottom-area {
+        height: 30vh;
+        flex-direction: column;
+        padding: 10px;
+        gap: 8px;
+        overflow-y: auto;
+    }
+
+    .hand-area {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .word-card {
+        width: 85px;
+        height: 42px;
+        font-size: 11px;
+    }
+
+    .draw-button {
+        width: 80px;
+        height: 38px;
+        font-size: 14px;
+        margin-left: 0;
+    }
+}
+
 /* ===== Clues (clues.html) ===== */
 body.clues-page {
     min-height: 100vh;

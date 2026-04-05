@@ -132,34 +132,49 @@
             
             // Add event listeners for dragging
             card.addEventListener('mousedown', startDrag);
+            card.addEventListener('touchstart', startDrag, { passive: false });
             
             handArea.appendChild(card);
             return card;
+        }
+
+        function getPointerPos(e) {
+            if (e.touches && e.touches.length > 0) {
+                return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            }
+            if (e.changedTouches && e.changedTouches.length > 0) {
+                return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+            }
+            return { x: e.clientX, y: e.clientY };
         }
 
         function startDrag(e) {
             e.preventDefault();
             draggedElement = e.target;
             isDragging = true;
-            
+
+            const pos = getPointerPos(e);
             const rect = draggedElement.getBoundingClientRect();
-            offset.x = e.clientX - rect.left;
-            offset.y = e.clientY - rect.top;
-            
+            offset.x = pos.x - rect.left;
+            offset.y = pos.y - rect.top;
+
             draggedElement.classList.add('dragging');
-            
+
             document.addEventListener('mousemove', drag);
             document.addEventListener('mouseup', stopDrag);
+            document.addEventListener('touchmove', drag, { passive: false });
+            document.addEventListener('touchend', stopDrag);
         }
 
         function drag(e) {
             if (!isDragging || !draggedElement) return;
-            
+
             e.preventDefault();
-            
-            const x = e.clientX - offset.x;
-            const y = e.clientY - offset.y;
-            
+
+            const pos = getPointerPos(e);
+            const x = pos.x - offset.x;
+            const y = pos.y - offset.y;
+
             draggedElement.style.position = 'fixed';
             draggedElement.style.left = x + 'px';
             draggedElement.style.top = y + 'px';
@@ -168,23 +183,24 @@
 
         function stopDrag(e) {
             if (!isDragging || !draggedElement) return;
-            
+
             isDragging = false;
             draggedElement.classList.remove('dragging');
-            
+
+            const pos = getPointerPos(e);
             const boardArea = document.getElementById('boardArea');
             const boardRect = boardArea.getBoundingClientRect();
             const cardRect = draggedElement.getBoundingClientRect();
-            
+
             // Check if card is dropped on board area
             if (cardRect.top < boardRect.bottom - 50) {
                 // Move to board area
                 draggedElement.style.position = 'absolute';
-                draggedElement.style.left = (e.clientX - boardRect.left - offset.x) + 'px';
-                draggedElement.style.top = (e.clientY - boardRect.top - offset.y) + 'px';
+                draggedElement.style.left = (pos.x - boardRect.left - offset.x) + 'px';
+                draggedElement.style.top = (pos.y - boardRect.top - offset.y) + 'px';
                 draggedElement.classList.add('floating-card');
                 boardArea.appendChild(draggedElement);
-                
+
                 reorganizeHand();
             } else {
                 // Return to hand or keep in current position
@@ -195,10 +211,12 @@
                     draggedElement.style.zIndex = '';
                 }
             }
-            
+
             draggedElement = null;
             document.removeEventListener('mousemove', drag);
             document.removeEventListener('mouseup', stopDrag);
+            document.removeEventListener('touchmove', drag);
+            document.removeEventListener('touchend', stopDrag);
         }
 
         function reorganizeHand() {
@@ -216,58 +234,64 @@
         // Circle and label dragging functionality
         function startCircleDrag(e) {
             if (!shiftPressed) return;
-            
+
             e.preventDefault();
             circleBeingDragged = e.target;
-            
+
+            const pos = getPointerPos(e);
             const rect = circleBeingDragged.getBoundingClientRect();
-            const boardRect = document.getElementById('boardArea').getBoundingClientRect();
-            
-            offset.x = e.clientX - rect.left;
-            offset.y = e.clientY - rect.top;
-            
+
+            offset.x = pos.x - rect.left;
+            offset.y = pos.y - rect.top;
+
             document.addEventListener('mousemove', dragCircle);
             document.addEventListener('mouseup', stopCircleDrag);
+            document.addEventListener('touchmove', dragCircle, { passive: false });
+            document.addEventListener('touchend', stopCircleDrag);
         }
 
         function startLabelDrag(e) {
             if (!shiftPressed) return;
-            
+
             e.preventDefault();
             circleBeingDragged = e.target;
-            
+
+            const pos = getPointerPos(e);
             const rect = circleBeingDragged.getBoundingClientRect();
-            const boardRect = document.getElementById('boardArea').getBoundingClientRect();
-            
-            offset.x = e.clientX - rect.left;
-            offset.y = e.clientY - rect.top;
-            
+
+            offset.x = pos.x - rect.left;
+            offset.y = pos.y - rect.top;
+
             document.addEventListener('mousemove', dragLabel);
             document.addEventListener('mouseup', stopCircleDrag);
+            document.addEventListener('touchmove', dragLabel, { passive: false });
+            document.addEventListener('touchend', stopCircleDrag);
         }
 
         function dragCircle(e) {
             if (!circleBeingDragged || !shiftPressed) return;
-            
+
             e.preventDefault();
-            
+
+            const pos = getPointerPos(e);
             const boardRect = document.getElementById('boardArea').getBoundingClientRect();
-            const x = e.clientX - boardRect.left - offset.x;
-            const y = e.clientY - boardRect.top - offset.y;
-            
+            const x = pos.x - boardRect.left - offset.x;
+            const y = pos.y - boardRect.top - offset.y;
+
             circleBeingDragged.style.left = Math.max(0, Math.min(x, boardRect.width - circleBeingDragged.offsetWidth)) + 'px';
             circleBeingDragged.style.top = Math.max(0, Math.min(y, boardRect.height - circleBeingDragged.offsetHeight)) + 'px';
         }
 
         function dragLabel(e) {
             if (!circleBeingDragged || !shiftPressed) return;
-            
+
             e.preventDefault();
-            
+
+            const pos = getPointerPos(e);
             const boardRect = document.getElementById('boardArea').getBoundingClientRect();
-            const x = e.clientX - boardRect.left - offset.x;
-            const y = e.clientY - boardRect.top - offset.y;
-            
+            const x = pos.x - boardRect.left - offset.x;
+            const y = pos.y - boardRect.top - offset.y;
+
             circleBeingDragged.style.left = Math.max(0, Math.min(x, boardRect.width - circleBeingDragged.offsetWidth)) + 'px';
             circleBeingDragged.style.top = Math.max(0, Math.min(y, boardRect.height - circleBeingDragged.offsetHeight)) + 'px';
         }
@@ -276,6 +300,8 @@
             circleBeingDragged = null;
             document.removeEventListener('mousemove', dragCircle);
             document.removeEventListener('mouseup', stopCircleDrag);
+            document.removeEventListener('touchmove', dragCircle);
+            document.removeEventListener('touchend', stopCircleDrag);
         }
 
         // Draw button functionality
@@ -312,10 +338,14 @@
         document.getElementById('circle1').addEventListener('mousedown', startCircleDrag);
         document.getElementById('circle2').addEventListener('mousedown', startCircleDrag);
         document.getElementById('circle3').addEventListener('mousedown', startCircleDrag);
-        
+        document.getElementById('circle1').addEventListener('touchstart', startCircleDrag, { passive: false });
+        document.getElementById('circle2').addEventListener('touchstart', startCircleDrag, { passive: false });
+        document.getElementById('circle3').addEventListener('touchstart', startCircleDrag, { passive: false });
+
         // Add label drag listeners
         document.querySelectorAll('.region-label').forEach(label => {
             label.addEventListener('mousedown', startLabelDrag);
+            label.addEventListener('touchstart', startLabelDrag, { passive: false });
         });
 
         // Draw button listener
