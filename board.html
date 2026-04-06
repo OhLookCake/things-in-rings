@@ -27,6 +27,12 @@
             <div class="hand-area" id="handArea"></div>
             <button class="draw-button" id="drawButton">Draw</button>
         </div>
+        <div class="nsfw-toggle" id="nsfwToggle" data-state="off">
+            <span class="nsfw-label">NSFW</span>
+            <button class="nsfw-option active" data-value="off">Off</button>
+            <button class="nsfw-option" data-value="mixed">Mixed</button>
+            <button class="nsfw-option" data-value="only">Only</button>
+        </div>
     </div>
 
     <script>
@@ -112,11 +118,19 @@
             }
         }
 
+        function getActiveWordList() {
+            const state = document.getElementById('nsfwToggle').dataset.state;
+            if (state === 'only') return nsfwWordList;
+            if (state === 'mixed') return wordList.concat(nsfwWordList);
+            return wordList;
+        }
+
         function getRandomWord() {
-            const availableWords = wordList.filter(word => !usedWords.includes(word));
+            const pool = getActiveWordList();
+            const availableWords = pool.filter(word => !usedWords.includes(word));
             if (availableWords.length === 0) {
                 usedWords = [];
-                return wordList[Math.floor(Math.random() * wordList.length)];
+                return pool[Math.floor(Math.random() * pool.length)];
             }
             const word = availableWords[Math.floor(Math.random() * availableWords.length)];
             usedWords.push(word);
@@ -350,6 +364,16 @@
 
         // Draw button listener
         document.getElementById('drawButton').addEventListener('click', drawNewCards);
+
+        // NSFW toggle listener
+        document.querySelectorAll('.nsfw-option').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const toggle = document.getElementById('nsfwToggle');
+                toggle.dataset.state = btn.dataset.value;
+                document.querySelectorAll('.nsfw-option').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
 
         // Initialize the interface
         initializeHand();
