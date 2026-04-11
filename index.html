@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Things in Rings</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23222'/><text x='50' y='68' font-family='Georgia,serif' font-size='60' font-style='italic' fill='%23f5f5f5' text-anchor='middle'>e</text></svg>">
   <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light';</script>
   <link rel="stylesheet" href="./styles.css">
 </head>
@@ -18,22 +19,22 @@
   <div class="how-to-play">
     <h2>How to Play</h2>
     <ol>
-      <li><strong>Generate clues.</strong> Open the <a href="clues.html">Clue Generator</a> and pick a difficulty. You'll get three clues &mdash; one for each ring:
+      <li><strong>Generate clues.</strong> One player is the <em>Cluer</em>. They open the <a href="clues.html">Clue Generator</a>, pick a difficulty, and secretly look at the three clues &mdash; one for each ring:
         <ul>
           <li><span class="ring-label attribute">Attribute</span> &mdash; a physical property (e.g. "Can be eaten")</li>
           <li><span class="ring-label context">Context</span> &mdash; where or how it's found (e.g. "Found in a kitchen")</li>
           <li><span class="ring-label word">Word</span> &mdash; a spelling/phonetic rule (e.g. "Has exactly 5 letters")</li>
         </ul>
       </li>
-      <li><strong>Draw words.</strong> On the <a href="board.html">Board</a>, each player has a hand of word cards. Click <em>Draw</em> to refill.</li>
-      <li><strong>Place words.</strong> Drag each word card into the region of the Venn diagram where it belongs:
+      <li><strong>Seed the board.</strong> The Cluer draws cards on the <a href="board.html">Board</a> and places three of them into their correct areas on the Venn diagram. The other players can see these placements but not the clues.</li>
+      <li><strong>Take turns.</strong> The remaining players go turn by turn. On your turn, take any card from the hand and place it in the area where you think it belongs. You don't know the categories &mdash; you're reverse-engineering them from what's already on the board. The Cluer says whether the placement is correct:
         <ul>
-          <li>Inside a single ring if it matches only that clue.</li>
-          <li>In the overlap if it matches two or three clues.</li>
-          <li>In the <em>None</em> zone if it matches nothing.</li>
+          <li>If <strong>correct</strong>, you keep going &mdash; take another card and place it.</li>
+          <li>If <strong>wrong</strong>, your turn ends.</li>
         </ul>
       </li>
-      <li><strong>Debate and score.</strong> Players take turns challenging each other's placements. Agree on the rules, argue about the edge cases, and have fun.</li>
+      <li><strong>Draw.</strong> If the hand has fewer than five cards at any point, hit <em>Draw</em> to refill it back up to five.</li>
+      <li><strong>Win.</strong> The first player to place five cards correctly in a single turn wins.</li>
     </ol>
   </div>
 
