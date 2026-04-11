@@ -1,4 +1,4 @@
-# Things in Rings
+# Venn in Doubt
 
 A Venn diagram party game. One player sets the secret categories, everyone else tries to figure them out by placing word cards on the board.
 
